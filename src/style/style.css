@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 0px 100px;
+}
+
+#game-progress {
+  text-align: center;
+  padding: 40px 20px;
+  height: 100%;
+}
+
+.game-progress__stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
