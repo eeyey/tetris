@@ -14,6 +14,7 @@ const TerserWebpackPlugin = require("terser-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const isDev = process.env.NODE_ENV === "development";
+const isAnalyze = process.env.NOVE_ANALYZE === "YES";
 
 const optimization = () => {
   const config = {
@@ -96,7 +97,7 @@ const plugins = () => {
     }),
   ];
 
-  if (!isDev) base.push(new BundleAnalyzerPlugin());
+  if (!isDev && isAnalyze) base.push(new BundleAnalyzerPlugin());
 
   return base;
 };
@@ -107,7 +108,7 @@ module.exports = {
   entry: ["@babel/polyfill", "./index.ts"],
   output: {
     filename: "[name].[contenthash].js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "public"),
   },
   resolve: {
     extensions: [".ts", ".js", ".json"],
