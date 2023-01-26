@@ -1,10 +1,15 @@
 const path = require("path");
 
 const HTMLWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCssAssetWebpackPlugin = require("optimize-css-assets-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
+const ESLintPlugin = require("eslint-webpack-plugin");
+
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
@@ -19,7 +24,8 @@ const optimization = () => {
 
   if (!isDev) {
     config.minimizer = [
-      new OptimizeCssAssetWebpackPlugin(),
+      // new OptimizeCssAssetWebpackPlugin(),
+      new CssMinimizerPlugin(),
       new TerserWebpackPlugin(),
     ];
   }
@@ -65,6 +71,8 @@ const jsLoaders = () => {
 
 const plugins = () => {
   const base = [
+    new ESLintPlugin(),
+    new MiniCssExtractPlugin(),
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
     }),
@@ -116,7 +124,7 @@ module.exports = {
       publicPath: "/assets/", // here's the change
     },
   },
-  devtool: isDev ? "source-map" : "",
+  devtool: isDev ? "source-map" : false,
   plugins: plugins(),
   module: {
     rules: [
